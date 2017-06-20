@@ -57,7 +57,7 @@ var ApplicationView = Backbone.View.extend({
       this.newWordInput.val('');
       this.model.add(word);
     } else {
-      console.log("error playing word: " + word.validationError)
+      console.log("error playing word: " + word.validationError);
       this.$('#word-errors').html(word.validationError);
     }
   },

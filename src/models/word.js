@@ -2,31 +2,11 @@ import _ from 'underscore';
 import Backbone from 'backbone';
 
 const LETTERS = {
-  'a': 1,
-  'b': 3,
-  'c': 3,
-  'd': 2,
-  'e': 1,
-  'f': 4,
-  'g': 2,
-  'h': 4,
-  'i': 1,
-  'j': 8,
-  'k': 5,
-  'l': 1,
-  'm': 3,
-  'n': 1,
-  'o': 1,
-  'p': 3,
-  'q': 10,
-  'r': 1,
-  's': 1,
-  't': 1,
-  'u': 1,
-  'v': 4,
-  'w': 4,
-  'x': 8,
-  'y': 4,
+  'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1,
+  'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8,
+  'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1,
+  'p': 3, 'q': 10,'r': 1, 's': 1, 't': 1,
+  'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4,
   'z': 10
 };
 
@@ -70,15 +50,15 @@ var Word = Backbone.Model.extend({
       return "Text must be a string (how did this happen?)";
     }
 
-    if (text == '') {
+    if (text === '') {
       return "Please type a word first";
     }
 
     if (text.length > 7) {
-      return "Pleas type a word with 7 or fewer letters";
+      return "Please type a word with 7 or fewer letters";
     }
 
-    var badChars = []
+    var badChars = [];
     for (let i = 0; i < text.length; i++) {
       if (!_.has(LETTERS, text[i])) {
         badChars.push(text[i]);
@@ -90,8 +70,16 @@ var Word = Backbone.Model.extend({
   },
 
   score: function() {
-    // TODO: test and implement
-    return 0;
+    var text = this.get('text');
+    if (this.validate()) { return undefined; }
+
+    var score = 0;
+    for (let i = 0; i < text.length; i++) {
+      score += LETTERS[text[i].toLowerCase()];
+    }
+    if (text.length === 7) { score += 50; }
+
+    return score;
   }
 });
 
