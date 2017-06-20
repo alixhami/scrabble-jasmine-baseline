@@ -71,7 +71,7 @@ var Word = Backbone.Model.extend({
 
   score: function() {
     var text = this.get('text');
-    if (this.validate()) { return undefined; }
+    if (!this.isValid()) { return undefined; }
 
     var score = 0;
     for (let i = 0; i < text.length; i++) {
